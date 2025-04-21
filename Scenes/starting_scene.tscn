@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://dphybkywpy7s6"]
+
+[ext_resource type="Script" path="res://Scripts/starting_scene.gd" id="1_n26q4"]
+[ext_resource type="Texture2D" uid="uid://8rc3rah5t4ia" path="res://Assets/textures/Lolipop.png" id="2_j7xqj"]
+
+[sub_resource type="Animation" id="Animation_tyxuc"]
+resource_name = "Intro"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qhq43"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v1ea0"]
+_data = {
+"Intro": SubResource("Animation_tyxuc"),
+"RESET": SubResource("Animation_qhq43")
+}
+
+[node name="Starting Scene" type="Node2D"]
+position = Vector2(-2, 2)
+script = ExtResource("1_n26q4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(10.8158, 15.7755)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 12.0
+offset_top = 28.0
+offset_right = 620.0
+offset_bottom = 1108.0
+scale = Vector2(0.436678, 0.415187)
+texture = ExtResource("2_j7xqj")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_v1ea0")
+}
+autoplay = "Intro"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

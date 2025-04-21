@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://dykfrgfcpqvyg"]
+
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_ydslh"]
+[ext_resource type="PackedScene" uid="uid://dcy2ux7j7th0t" path="res://Scenes/bird.tscn" id="2_j36tr"]
+[ext_resource type="PackedScene" uid="uid://r2hi2qp0rb4c" path="res://Scenes/pipe_spawner.tscn" id="3_e2lic"]
+[ext_resource type="Texture2D" uid="uid://s6gxhkqpge6o" path="res://Assets/textures/background.png" id="3_gntkx"]
+[ext_resource type="PackedScene" uid="uid://caenyne4tceod" path="res://Scenes/ground.tscn" id="4_elovf"]
+[ext_resource type="PackedScene" uid="uid://3kq0ai2ao4tk" path="res://Scenes/ui.tscn" id="5_31akf"]
+[ext_resource type="AudioStream" uid="uid://b1yjfeoagigtj" path="res://Assets/audio/wing.wav" id="7_fmbta"]
+[ext_resource type="AudioStream" uid="uid://rqosaw6f8g1i" path="res://Assets/audio/point.wav" id="8_n0pyy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e3pu"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_ydslh")
+
+[node name="Bird" parent="." instance=ExtResource("2_j36tr")]
+z_index = 1
+position = Vector2(56, 216)
+
+[node name="Pipe Spawner" parent="." instance=ExtResource("3_e2lic")]
+z_index = -1
+position = Vector2(103, 147)
+
+[node name="Ground" parent="." instance=ExtResource("4_elovf")]
+visibility_layer = 3
+
+[node name="UI" parent="." instance=ExtResource("5_31akf")]
+top_level = true
+z_index = 2
+offset_right = -288.0
+offset_bottom = -512.0
+
+[node name="Button" type="Node" parent="."]
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Button"]
+position = Vector2(144, 216)
+scale = Vector2(14.7822, 39.1885)
+shape = SubResource("RectangleShape2D_0e3pu")
+shape_visible = false
+action = "Flap"
+
+[node name="Graphic" type="Node" parent="."]
+
+[node name="Background" type="CanvasLayer" parent="Graphic"]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="Graphic/Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_gntkx")
+expand_mode = 5
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Wing" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("7_fmbta")
+
+[node name="Point" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("8_n0pyy")
+
+[connection signal="Fall" from="Bird" to="." method="_on_bird_fall"]
+[connection signal="Pipe" from="Pipe Spawner" to="." method="_on_pipe_spawner_pipe"]

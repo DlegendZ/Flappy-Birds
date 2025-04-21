@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://3kq0ai2ao4tk"]
+
+[ext_resource type="Script" path="res://Scripts/ui.gd" id="1_rp6ee"]
+[ext_resource type="FontFile" uid="uid://bblrlpw83i6jg" path="res://Assets/fonts/flappyfont.TTF" id="1_wgadn"]
+[ext_resource type="PackedScene" uid="uid://duk62243677b0" path="res://Scenes/game_over.tscn" id="2_7jcu7"]
+[ext_resource type="Texture2D" uid="uid://byfqcmi466lal" path="res://Assets/textures/message.png" id="2_ibga6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gpe0w"]
+font = ExtResource("1_wgadn")
+font_size = 20
+
+[sub_resource type="Animation" id="Animation_fxcdl"]
+resource_name = "Blink"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.615686), Color(1, 1, 1, 0), Color(1, 1, 1, 0.615686)]
+}
+
+[sub_resource type="Animation" id="Animation_k8mqt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.615686)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hhgk0"]
+_data = {
+"Blink": SubResource("Animation_fxcdl"),
+"RESET": SubResource("Animation_k8mqt")
+}
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rp6ee")
+
+[node name="GameOver" parent="." instance=ExtResource("2_7jcu7")]
+visible = false
+layout_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.615686)
+position = Vector2(144, 225)
+scale = Vector2(0.851, 0.826)
+texture = ExtResource("2_ibga6")
+
+[node name="Score" type="Label" parent="."]
+layout_mode = 1
+offset_left = 144.0
+offset_top = 25.0
+offset_right = 159.0
+offset_bottom = 49.0
+label_settings = SubResource("LabelSettings_gpe0w")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_hhgk0")
+}
+autoplay = "Blink"

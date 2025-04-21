@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=3 uid="uid://duk62243677b0"]
+
+[ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_jyp0p"]
+[ext_resource type="FontFile" uid="uid://bblrlpw83i6jg" path="res://Assets/fonts/flappyfont.TTF" id="2_uc56g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ppjv"]
+bg_color = Color(0.168627, 0.168627, 0.168627, 0.882353)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 20
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_fctb1"]
+font = ExtResource("2_uc56g")
+font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_kp2fh"]
+font = ExtResource("2_uc56g")
+font_size = 14
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jyp0p")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 80.0
+offset_right = 65.0
+offset_bottom = 151.0
+scale = Vector2(6.03603, 4.81489)
+theme_override_styles/panel = SubResource("StyleBoxFlat_0ppjv")
+
+[node name="HighScore" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 4.80448
+offset_top = 43.407
+offset_right = 82.8045
+offset_bottom = 63.407
+scale = Vector2(0.260554, 0.276383)
+text = "HIGHSCORE :"
+label_settings = SubResource("LabelSettings_fctb1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="Panel"]
+layout_mode = 1
+offset_left = 5.46717
+offset_top = 38.2148
+offset_right = 63.4672
+offset_bottom = 58.2148
+scale = Vector2(0.260554, 0.276383)
+text = "SCORE :"
+label_settings = SubResource("LabelSettings_fctb1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOver" type="Label" parent="Panel"]
+layout_mode = 1
+offset_left = 9.0
+offset_top = 4.0
+offset_right = 49.0
+offset_bottom = 38.0
+scale = Vector2(0.582507, 0.883694)
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_kp2fh")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 1
+offset_left = 5.0
+offset_top = 54.83
+offset_right = 69.0
+offset_bottom = 76.83
+scale = Vector2(0.46215, 0.480649)
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_uc56g")
+theme_override_font_sizes/font_size = 14
+text = "RESTART"
+
+[connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]
